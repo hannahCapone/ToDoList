@@ -6,16 +6,18 @@
 
 body {
     background: #e27442;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
 }
 
 .todo-container {
     color: white;
-    position: absolute;
-    top: 50%;
-    left: 50%;
     padding: 20px;
-    width: 600px;
-    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 600px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 20px;
     display: flex;
@@ -24,7 +26,8 @@ body {
 }
 
 .todo {
-    width: 400px;
+    width: 100%;
+    max-width: 400px;
 }
 
 .todo-container h2 {
@@ -33,88 +36,116 @@ body {
     font-size: 2em;
 }
 
+.todo-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
 .todo-header input {
-    width: 92%;
-        border: none;
-        border-radius: 5px;
-        height: 20px;
-        font-family: 'Candal', sans-serif;
-    }
-    
-    .todo-header button {
-        color: white;
-        border: none;
-        border-radius: 50%;
-        cursor: pointer;
-        padding: 5px;
-        font-family: 'Candal', sans-serif;
-        background-color: rgb(51, 212, 100);
-    }
-    
-    .todo-container ul {
-        list-style: none;
-    }
-    
-    .todo-list-item {
-        padding: 10px;
-        margin-top: 10px;
-        border: none;
-        border-radius: 5px;
-        font-family: 'Candal', sans-serif;
-        background: rgba(0, 0, 0, 0.3);
-        display: flex;
-        flex-direction: row;
-    }
-    
-    .todo-list-item form {
-        width: 100%;
-        display: flex;
-    }
-    
-    .todo-list-item input {
-        flex-grow: 2;
-        margin-right: 20px;
-        border: none;
-        border-radius: 5px;
-        font-family: 'Candal', sans-serif;
-    }
-    
-    .todo-list-item button {
-        color: white;
-        border: none;
-        border-radius: 5px;
-            cursor: pointer;
-            padding: 5px;
-            font-family: 'Candal', sans-serif;
-            background-color: rgb(51, 212, 100);
-        }
-        
-        .todo-list-item .cancel {
-            color: white;
-            text-decoration: none;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            padding: 5px;
-            font-family: 'Candal', sans-serif;
-            background-color: rgb(223, 43, 43);
-            margin-left: 5px;
-        }
-        
-        .todo-list-item div {
-            flex-grow: 2;
-        }
-        
-        .todo-list-item .edit {
-            color: rgb(143, 233, 58);
-            margin-right: 10px;
-            cursor: pointer;
-            text-decoration: none;
-        }
-        
-        .todo-list-item .remove {
-            color: rgb(243, 96, 96);
-            margin-right: 5px;
-            cursor: pointer;
-            text-decoration: none;
-        }
+    flex-grow: 1;
+    border: none;
+    border-radius: 5px;
+    height: 28px;
+    padding: 0 8px;
+    font-family: 'Candal', sans-serif;
+}
+
+.todo-header button {
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 5px;
+    width: 28px;
+    height: 28px;
+    font-family: 'Candal', sans-serif;
+    background-color: rgb(51, 212, 100);
+}
+
+.todo-container ul {
+    list-style: none;
+}
+
+.todo-list-item {
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Candal', sans-serif;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.todo-list-item form {
+    width: 100%;
+    display: flex;
+}
+
+.todo-list-item input {
+    flex-grow: 2;
+    margin-right: 20px;
+    padding: 0 6px;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Candal', sans-serif;
+}
+
+.todo-list-item button {
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 5px;
+    font-family: 'Candal', sans-serif;
+    font-size: 13px;
+    background-color: rgb(51, 212, 100);
+}
+
+.todo-list-item .cancel {
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 5px;
+    font-family: 'Candal', sans-serif;
+    font-size: 13px;
+    background-color: rgb(223, 43, 43);
+    margin-left: 5px;
+}
+
+.todo-list-item-name {
+    flex-grow: 2;
+    overflow-wrap: anywhere;
+}
+
+.todo-list-item-actions {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    margin-left: 10px;
+}
+
+.todo-list-item .edit {
+    color: rgb(143, 233, 58);
+    margin-right: 10px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+/* The remove button looks like the old remove link */
+.todo-list-item .remove-form {
+    width: auto;
+    display: inline;
+}
+
+.todo-list-item .remove {
+    color: rgb(243, 96, 96);
+    background: none;
+    padding: 0;
+    margin-right: 5px;
+    font-size: 1em;
+}

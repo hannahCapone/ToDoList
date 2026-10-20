@@ -15,19 +15,19 @@
         <div class="todo">
             <form action="/" method="POST" class="todo-header">
                 <input type="text" name="content" placeholder="Add a new task" required>
-                <button type="submit"><span class="fas fa-plus"></span></button>
+                <button type="submit" aria-label="Add"><span class="fas fa-plus"></span></button>
             </form>
             <ul class="todo-list">
                 <% todoTasks.forEach(details => { %>
                     <li class="todo-list-item">
                         <div class="todo-list-item-name"><%= details.content %></div>
                         <div class="todo-list-item-actions">
-                            <a href="/edit/<%= details._id %>" class="edit">
+                            <a href="/edit/<%= details._id %>" class="edit" aria-label="Edit">
                                 <span class="fas fa-edit"></span>
                             </a>
-                            <a href="/remove/<%= details._id %>" class="remove">
-                                <span class="fas fa-times"></span>
-                            </a>
+                            <form action="/remove/<%= details._id %>" method="POST" class="remove-form">
+                                <button type="submit" class="remove" aria-label="Remove"><span class="fas fa-times"></span></button>
+                            </form>
                         </div>
                     </li>
                 <% }) %>

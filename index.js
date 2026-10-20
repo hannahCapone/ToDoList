@@ -12,10 +12,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/stylesheets", express.static("public/stylesheets"));
 
 // Connect to MongoDB
-mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.DB_CONNECT)
     .then(() => {
         console.log("Connected to MongoDB!");
-        app.listen(3000, () => console.log("Server running on port 3000"));
+        const port = process.env.PORT || 3000;
+        app.listen(port, () => console.log(`Server running on port ${port}`));
     })
     .catch(err => {
         console.error("Error connecting to MongoDB:", err);
@@ -46,11 +47,12 @@ app.post('/', async (req, res) => {
     }
 });
 
+// Removing is a POST so a link preview or prefetch can't delete a task
 app.route("/remove/:id")
-    .get(async (req, res) => {
+    .post(async (req, res) => {
         const id = req.params.id;
         try {
-            await TodoTask.findByIdAndRemove(id);
+            await TodoTask.findByIdAndDelete(id);
             res.redirect("/");
         } catch (err) {
             console.error(err);
