@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+    <link rel="stylesheet" href="public/stylesheets/style.css" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhai:wght@400;700&family=Candal&family=Chewy&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+</head>
+<body>
+    <!-- GitHub Pages version: same pages as views/todo.ejs and views/todoEdit.ejs,
+         with tasks saved in your browser instead of MongoDB -->
+    <div class="todo-container">
+        <h2>To-Do List</h2>
+        <div class="todo">
+            <form class="todo-header" id="add">
+                <input type="text" name="content" placeholder="Add a new task" required>
+                <button type="submit" aria-label="Add"><span class="fas fa-plus"></span></button>
+            </form>
+            <ul class="todo-list" id="list"></ul>
+        </div>
+    </div>
+
+    <script>
+        const KEY = 'todoTasks';
+        const list = document.getElementById('list');
+        let editing = null;
+
+        const load = () => {
+            try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch { return []; }
+        };
+        let tasks = load();
+        const save = () => {
+            try { localStorage.setItem(KEY, JSON.stringify(tasks)); } catch {}
+        };
+
+        const item = (task) => {
+            const li = document.createElement('li');
+            li.className = 'todo-list-item';
+            if (task.id === editing) {
+                li.innerHTML = `
+                    <form>
+                        <input type="text" name="content" required>
+                        <button type="submit">Confirm</button>
+                        <a href="#" class="cancel">Cancel</a>
+                    </form>`;
+                const input = li.querySelector('input');
+                input.value = task.content;
+                li.querySelector('form').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    task.content = input.value.trim() || task.content;
+                    editing = null;
+                    save();
+                    render();
+                });
+                li.querySelector('.cancel').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    editing = null;
+                    render();
+                });
+                setTimeout(() => input.focus());
+            } else {
+                li.innerHTML = `
+                    <div class="todo-list-item-name"></div>
+                    <div class="todo-list-item-actions">
+                        <a href="#" class="edit" aria-label="Edit"><span class="fas fa-edit"></span></a>
+                        <button type="button" class="remove" aria-label="Remove"><span class="fas fa-times"></span></button>
+                    </div>`;
+                li.querySelector('.todo-list-item-name').textContent = task.content;
+                li.querySelector('.edit').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    editing = task.id;
+                    render();
+                });
+                li.querySelector('.remove').addEventListener('click', () => {
+                    tasks = tasks.filter((t) => t.id !== task.id);
+                    save();
+                    render();
+                });
+            }
+            return li;
+        };
+
+        const render = () => list.replaceChildren(...tasks.map(item));
+
+        document.getElementById('add').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const input = e.target.content;
+            const content = input.value.trim();
+            if (!content) return;
+            tasks.push({ id: Date.now().toString(36) + Math.random().toString(36).slice(2, 7), content, date: new Date().toISOString() });
+            input.value = '';
+            save();
+            render();
+        });
+
+        render();
+    </script>
+</body>
+</html>
