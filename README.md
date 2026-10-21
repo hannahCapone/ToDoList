@@ -2,7 +2,7 @@
 
 A to-do list app with a database behind it, built for Server Side Web Development at the University of Westminster in London. Add, edit, and remove tasks; everything is saved in MongoDB.
 
-**Live:** https://hannahcapone.github.io/ToDoList/
+**Live:** https://hannahcapone.github.io/todo-list/
 
 **Built with:** Node.js, Express, EJS, MongoDB (Mongoose)
 
